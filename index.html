@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מירה קפה — הפינה שלך, כל בוקר.</title>
+  <meta name="description" content="מירה קפה ברחוב רוטשילד 22, תל אביב. פתוח כל יום מ-7 בבוקר.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── TOKENS ─── */
+    :root {
+      --cream:           oklch(96.5% 0.009 80);
+      --cream-deep:      oklch(93%   0.012 75);
+      --cream-hero:      oklch(92%   0.018 72);
+      --terracotta:      oklch(58%   0.130 38);
+      --terracotta-deep: oklch(51%   0.130 38);
+      --sage:            oklch(57%   0.077 142);
+      --sage-light:      oklch(74%   0.052 142);
+      --espresso:        oklch(21%   0.015 55);
+      --espresso-mid:    oklch(37%   0.012 60);
+      --dust:            oklch(61%   0.012 75);
+      --dust-line:       oklch(87%   0.011 75);
+      --gold:            oklch(76%   0.14  82);
+
+      --font-display: 'Frank Ruhl Libre', Georgia, serif;
+      --font-body:    'Heebo', system-ui, sans-serif;
+
+      --sp-2:   2px;
+      --sp-4:   4px;
+      --sp-8:   8px;
+      --sp-12:  12px;
+      --sp-16:  16px;
+      --sp-24:  24px;
+      --sp-32:  32px;
+      --sp-48:  48px;
+      --sp-64:  64px;
+      --sp-96:  96px;
+      --sp-128: 128px;
+
+      --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+      --nav-h: 64px;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--espresso);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      direction: rtl;
+    }
+
+    /* Linen grain texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.028;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, oklch(37% 0.012 60 / 0.5) 2px, oklch(37% 0.012 60 / 0.5) 3px),
+        repeating-linear-gradient(90deg, transparent, transparent 4px, oklch(37% 0.012 60 / 0.3) 4px, oklch(37% 0.012 60 / 0.3) 5px);
+      background-size: 7px 7px, 9px 9px;
+    }
+
+    a  { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    address { font-style: normal; }
+
+    /* ─── SOCIAL PROOF BAR ─── */
+    .proof-bar {
+      background: var(--espresso);
+      padding: var(--sp-8) var(--sp-48);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-24);
+      flex-wrap: wrap;
+    }
+    .proof-bar-item {
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: oklch(80% 0.011 75);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+    }
+    .proof-bar-sep {
+      color: oklch(40% 0.010 75);
+      font-size: 0.75rem;
+      user-select: none;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--sp-48);
+      background: var(--cream);
+      transition:
+        background 320ms var(--ease-quart),
+        box-shadow 320ms var(--ease-quart);
+    }
+    .nav.scrolled {
+      background: oklch(96.5% 0.009 80 / 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--dust-line);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--espresso);
+      transition: opacity 150ms;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-32);
+    }
+    .nav-links a {
+      font-size: 0.8125rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--espresso-mid);
+      transition: color 150ms;
+    }
+    .nav-links a:hover { color: var(--espresso); }
+
+    /* ─── BOOKING BUTTON ─── */
+    .book-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-8);
+      padding: var(--sp-16) var(--sp-48);
+      background: var(--terracotta);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition:
+        transform 220ms var(--ease-quart),
+        box-shadow 220ms var(--ease-quart),
+        color 300ms;
+      text-decoration: none;
+    }
+    .book-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--terracotta-deep);
+      border-radius: 100px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 450ms var(--ease-expo);
+      z-index: 0;
+    }
+    .book-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 25%, oklch(76% 0.14 82 / 0.45) 50%, transparent 75%);
+      transform: translateX(100%);
+      animation: shimmer-sweep 2.8s ease-in-out infinite;
+      border-radius: 100px;
+      z-index: 1;
+    }
+    .book-btn:hover::before { transform: scaleX(1); }
+    .book-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px oklch(58% 0.13 38 / 0.28);
+    }
+    .book-btn span { position: relative; z-index: 2; }
+    .book-btn:focus-visible {
+      outline: 2px solid var(--terracotta);
+      outline-offset: 4px;
+    }
+
+    @keyframes shimmer-sweep {
+      0%       { transform: translateX(100%); }
+      35%, 100%{ transform: translateX(-100%); }
+    }
+
+    /* Nav booking button variant */
+    .nav-book {
+      padding: var(--sp-8) var(--sp-24) !important;
+      font-size: 0.875rem !important;
+      color: var(--cream) !important;
+    }
+
+    /* ─── HAMBURGER ─── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--sp-8);
+    }
+    .nav-toggle span {
+      display: block;
+      height: 1.5px;
+      background: var(--espresso);
+      transition: transform 300ms var(--ease-expo), opacity 200ms;
+      transform-origin: center;
+    }
+    .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile overlay */
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      inset: 0;
+      background: var(--cream);
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-48);
+      z-index: 190;
+    }
+    .nav-links.open a {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--espresso);
+    }
+    .nav-links.open .nav-book {
+      font-family: var(--font-display) !important;
+      font-size: 1.5rem !important;
+      padding: var(--sp-12) var(--sp-48) !important;
+    }
+
+    /* ─── HERO ─── */
+    /* ── SCROLL-EXPAND HERO ── */
+    .seh {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .seh-bg {
+      position: absolute;
+      inset: 0;
+      will-change: opacity;
+    }
+    .seh-bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .seh-bg-dim {
+      position: absolute;
+      inset: 0;
+      background: oklch(0% 0 0 / 0.22);
+    }
+    .seh-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 400px;
+      border-radius: 16px;
+      overflow: hidden;
+      will-change: width, height, border-radius, box-shadow;
+    }
+    .seh-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .seh-card-dim {
+      position: absolute;
+      inset: 0;
+      background: oklch(0% 0 0 / 0.5);
+      will-change: opacity;
+    }
+    .seh-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 0.35em;
+      z-index: 10;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .seh-word {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      color: var(--cream);
+      font-weight: 400;
+      margin: 0;
+      will-change: transform;
+      text-shadow: 0 2px 24px oklch(0% 0 0 / 0.5);
+      line-height: 1;
+    }
+    .seh-hint {
+      position: absolute;
+      bottom: 44px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      color: oklch(96.5% 0.009 80 / 0.65);
+      z-index: 10;
+      pointer-events: none;
+      white-space: nowrap;
+      will-change: opacity;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .seh-bg { opacity: 1 !important; }
+      .seh-card {
+        width: min(800px, 90vw) !important;
+        height: min(500px, 60vh) !important;
+      }
+      .seh-word { transform: none !important; }
+      .seh-hint { display: none; }
+      .seh-card-dim { opacity: 0.2 !important; }
+    }
+
+    /* ─── SECTION DIVIDER ─── */
+    .section-divider {
+      height: 4px;
+      background:
+        radial-gradient(ellipse 45% 100% at 15% 50%, oklch(58% 0.130 38 / 0.4) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 100% at 50% 50%, oklch(58% 0.130 38 / 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 100% at 85% 50%, oklch(58% 0.130 38 / 0.3) 0%, transparent 65%);
+    }
+
+    /* ─── SECTION SHARED ─── */
+    .section {
+      padding: var(--sp-128) var(--sp-48);
+      position: relative;
+    }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--terracotta);
+      margin-bottom: var(--sp-32);
+      display: block;
+    }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--espresso);
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      background: var(--cream-deep);
+      padding: var(--sp-96) var(--sp-48);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-48);
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-12);
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      font-weight: 300;
+      color: var(--terracotta);
+      line-height: 1;
+      position: relative;
+      display: inline-block;
+    }
+    .stat-num::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      right: 5%;
+      left: 5%;
+      height: 2px;
+      background: linear-gradient(to left, transparent, var(--terracotta), transparent);
+      border-radius: 1px;
+    }
+    .stat-sfx {
+      font-size: 0.55em;
+      font-weight: 300;
+      vertical-align: super;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--espresso-mid);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── ABOUT ─── */
+    .about { background: var(--cream); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--sp-96);
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-32);
+    }
+    .about-pull {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--espresso);
+      max-width: 28ch;
+    }
+    .about-text {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--espresso-mid);
+      max-width: 54ch;
+    }
+    .about-photo {
+      aspect-ratio: 3 / 4;
+      border-radius: 2px;
+      background: linear-gradient(
+        158deg,
+        oklch(85% 0.028 62)  0%,
+        oklch(76% 0.038 48) 45%,
+        oklch(64% 0.042 36) 100%
+      );
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: oklch(21% 0.015 55 / 0.07);
+    }
+
+    /* ─── MENU ─── */
+    .menu { background: var(--cream-deep); }
+    .menu-inner {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: var(--sp-32);
+      border-bottom: 1px solid var(--dust-line);
+      margin-bottom: var(--sp-8);
+      gap: var(--sp-24);
+    }
+    .menu-aside {
+      font-size: 0.8125rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dust);
+      white-space: nowrap;
+    }
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: var(--sp-24);
+      padding: var(--sp-32) var(--sp-16);
+      margin: 0 calc(-1 * var(--sp-16));
+      border-bottom: 1px solid var(--dust-line);
+      border-radius: 4px;
+      transition:
+        transform 240ms var(--ease-quart),
+        box-shadow 240ms var(--ease-quart),
+        background 240ms var(--ease-quart);
+      cursor: default;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover {
+      transform: translateY(-3px);
+      background: oklch(95.5% 0.012 78);
+      box-shadow: 0 8px 24px oklch(58% 0.13 38 / 0.09);
+    }
+    .menu-item-body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+    }
+    .menu-item-name {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--espresso);
+    }
+    .menu-item-desc {
+      font-size: 0.9375rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--dust);
+      max-width: 50ch;
+    }
+    .menu-item-price {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: var(--terracotta);
+      white-space: nowrap;
+    }
+    .menu-footnote {
+      margin-top: var(--sp-48);
+      font-size: 0.8125rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dust);
+    }
+
+    /* ─── REVIEWS ─── */
+    .reviews {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .reviews-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 65%, oklch(58% 0.13 38 / 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 30%, oklch(76% 0.14 82 / 0.04) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .reviews-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .reviews-header {
+      text-align: center;
+      margin-bottom: var(--sp-64);
+    }
+    .reviews-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--sp-24);
+    }
+    .review-card {
+      flex: 0 1 calc(33.333% - var(--sp-24));
+      min-width: 270px;
+      max-width: 380px;
+      background: var(--cream-deep);
+      border-radius: 4px;
+      padding: var(--sp-32);
+      border-left: 3px solid var(--terracotta);
+      transition:
+        transform 280ms var(--ease-quart),
+        box-shadow 280ms var(--ease-quart);
+    }
+    .review-card:nth-child(1) { transform: rotate(-1.5deg); }
+    .review-card:nth-child(2) { transform: rotate(0.8deg); }
+    .review-card:nth-child(3) { transform: rotate(-0.6deg); }
+    .review-card:nth-child(4) { transform: rotate(1.2deg); }
+    .review-card:nth-child(5) { transform: rotate(-0.9deg); }
+    .review-card:hover {
+      transform: rotate(0deg) translateY(-8px) !important;
+      box-shadow: 0 16px 40px oklch(58% 0.13 38 / 0.13);
+    }
+    .review-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: var(--sp-16);
+      color: var(--gold);
+      font-size: 1.125rem;
+    }
+    .review-quote {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--espresso);
+      margin-bottom: var(--sp-24);
+    }
+    .review-author {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--espresso);
+    }
+    .review-location {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--dust);
+      letter-spacing: 0.04em;
+      margin-top: var(--sp-4);
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery { padding-bottom: var(--sp-128); }
+    .gallery-strip {
+      display: flex;
+      gap: var(--sp-12);
+      padding: 0 var(--sp-48);
+      overflow-x: auto;
+      scrollbar-width: none;
+      cursor: grab;
+      direction: ltr;
+    }
+    .gallery-strip::-webkit-scrollbar { display: none; }
+    .gallery-strip:active { cursor: grabbing; }
+    .gallery-panel {
+      flex-shrink: 0;
+      border-radius: 2px;
+      overflow: hidden;
+      transition:
+        transform 420ms var(--ease-quart),
+        filter 420ms var(--ease-quart);
+    }
+    .gallery-panel:hover {
+      transform: scale(1.04);
+      filter: saturate(1.18) brightness(1.04);
+    }
+    .gallery-panel:nth-child(1) { width: 300px; aspect-ratio: 4/5;   background: linear-gradient(175deg, oklch(82% 0.032 70) 0%, oklch(72% 0.042 58) 100%); }
+    .gallery-panel:nth-child(2) { width: 520px; aspect-ratio: 16/10; background: linear-gradient(140deg, oklch(78% 0.036 50) 0%, oklch(66% 0.048 36) 100%); }
+    .gallery-panel:nth-child(3) { width: 260px; aspect-ratio: 3/4;   background: linear-gradient(195deg, oklch(74% 0.060 142) 0%, oklch(62% 0.072 132) 100%); }
+    .gallery-panel:nth-child(4) { width: 400px; aspect-ratio: 4/3;   background: linear-gradient(155deg, oklch(86% 0.022 74) 0%, oklch(70% 0.038 54) 100%); }
+
+    /* ─── LOCATION ─── */
+    .location { background: var(--cream); }
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-96);
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+    .location-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-48);
+    }
+    .location-address-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      color: var(--dust);
+      display: block;
+      margin-bottom: var(--sp-12);
+    }
+    .location-address {
+      font-family: var(--font-display);
+      font-size: 1.625rem;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--espresso);
+    }
+    .hours-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .hours-table td {
+      padding: var(--sp-12) 0;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: var(--espresso-mid);
+      border-bottom: 1px solid var(--dust-line);
+    }
+    .hours-table td:first-child { color: var(--espresso); }
+    .hours-table td:last-child  { text-align: left; }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .location-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-12);
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 500;
+      color: var(--terracotta);
+      transition: color 200ms var(--ease-quart), gap 200ms var(--ease-quart);
+    }
+    .location-cta::before {
+      content: '←';
+      font-style: normal;
+      font-weight: 300;
+      transition: transform 200ms var(--ease-quart);
+    }
+    .location-cta:hover { color: var(--terracotta-deep); }
+    .location-cta:hover::before { transform: translateX(-5px); }
+    .location-cta:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 4px; border-radius: 2px; }
+    .location-map {
+      aspect-ratio: 4/3;
+      background: linear-gradient(130deg, oklch(91% 0.012 80) 0%, oklch(87% 0.016 74) 100%);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-pin-label {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-8);
+    }
+    .map-pin {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      box-shadow: 0 0 0 4px oklch(58% 0.13 38 / 0.2);
+    }
+    .map-pin-text {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      color: var(--espresso-mid);
+      background: var(--cream);
+      padding: var(--sp-4) var(--sp-8);
+      border-radius: 2px;
+    }
+
+    /* ─── PRE-FOOTER CTA ─── */
+    .cta-section {
+      background: var(--cream-deep);
+      padding: var(--sp-128) var(--sp-48);
+      text-align: center;
+    }
+    .cta-section-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--sp-32);
+    }
+    .cta-section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--espresso);
+      max-width: 24ch;
+    }
+    .cta-section-sub {
+      font-size: 1.0625rem;
+      font-weight: 300;
+      color: var(--espresso-mid);
+      max-width: 42ch;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: var(--espresso);
+      padding: var(--sp-64) var(--sp-48);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--sp-32);
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      font-weight: 400;
+      color: var(--cream);
+    }
+    .footer-social {
+      display: flex;
+      gap: var(--sp-24);
+    }
+    .footer-social a {
+      font-size: 0.6875rem;
+      letter-spacing: 0.14em;
+      color: oklch(68% 0.011 75);
+      transition: color 150ms;
+    }
+    .footer-social a:hover { color: var(--sage-light); }
+    .footer-social a:focus-visible { outline: 1px solid var(--sage-light); outline-offset: 4px; }
+    .footer-meta { text-align: left; }
+    .footer-address {
+      font-size: 0.8125rem;
+      font-weight: 300;
+      color: oklch(62% 0.011 75);
+      line-height: 1.7;
+    }
+    .footer-copy {
+      margin-top: var(--sp-8);
+      font-size: 0.6875rem;
+      color: oklch(45% 0.010 75);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── FLOATING MOBILE BOOK ─── */
+    .float-book {
+      display: none;
+      position: fixed;
+      bottom: var(--sp-24);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 300;
+    }
+    .float-book .book-btn {
+      box-shadow: 0 8px 32px oklch(58% 0.13 38 / 0.35);
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s var(--ease-quart), transform 0.65s var(--ease-quart);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity 0.65s var(--ease-quart), transform 0.65s var(--ease-quart);
+    }
+    .reveal-right.in { opacity: 1; transform: none; }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.65s var(--ease-quart), transform 0.65s var(--ease-quart);
+    }
+    .reveal-scale.in { opacity: 1; transform: scale(1); }
+
+    .reveal-zoom {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.65s var(--ease-quart), transform 0.65s var(--ease-quart);
+    }
+    .reveal-zoom.in { opacity: 1; transform: scale(1); }
+
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.20s; }
+    .delay-3 { transition-delay: 0.30s; }
+    .delay-4 { transition-delay: 0.40s; }
+    .delay-5 { transition-delay: 0.50s; }
+
+    /* Review card reveal overrides rotation */
+    .review-card.reveal-scale { transform: rotate(var(--rot, 0deg)) scale(0.94); opacity: 0; }
+    .review-card:nth-child(1) { --rot: -1.5deg; }
+    .review-card:nth-child(2) { --rot:  0.8deg; }
+    .review-card:nth-child(3) { --rot: -0.6deg; }
+    .review-card:nth-child(4) { --rot:  1.2deg; }
+    .review-card:nth-child(5) { --rot: -0.9deg; }
+    .review-card.reveal-scale.in { transform: rotate(var(--rot, 0deg)) scale(1); opacity: 1; }
+    .review-card:hover { transform: rotate(0deg) translateY(-8px) scale(1) !important; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { gap: var(--sp-20); }
+      .review-card { flex: 0 1 calc(50% - var(--sp-24)); }
+    }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: var(--sp-48); }
+      .about-photo { aspect-ratio: 4/3; order: -1; }
+      .about-text  { max-width: 100%; }
+      .location-grid { grid-template-columns: 1fr; gap: var(--sp-48); }
+    }
+    @media (max-width: 640px) {
+      :root { --nav-h: 56px; }
+      .proof-bar  { padding: var(--sp-8) var(--sp-16); gap: var(--sp-12); }
+      .nav        { padding: 0 var(--sp-24); }
+      .nav-links  { display: none; }
+      .nav-toggle { display: flex; }
+      .desktop-only { display: none !important; }
+
+      .section  { padding: var(--sp-96) var(--sp-24); }
+      .stats    { padding: var(--sp-64) var(--sp-24); }
+      .cta-section { padding: var(--sp-96) var(--sp-24); }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-32); }
+      .review-card { flex: 0 1 100%; }
+
+      .menu-header { flex-direction: column; align-items: flex-start; }
+      .menu-aside  { display: none; }
+
+      .gallery-strip { padding: 0 var(--sp-24); }
+      .gallery-panel:nth-child(1) { width: 210px; }
+      .gallery-panel:nth-child(2) { width: 320px; }
+      .gallery-panel:nth-child(3) { width: 180px; }
+      .gallery-panel:nth-child(4) { width: 260px; }
+
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-social { justify-content: center; }
+      .footer-meta   { text-align: center; }
+
+      .float-book { display: flex; }
+    }
+
+    /* ─── A11Y ─── */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: var(--sp-8);
+      background: var(--terracotta);
+      color: var(--cream);
+      padding: var(--sp-8) var(--sp-24);
+      font-size: 0.875rem;
+      font-weight: 500;
+      z-index: 9999;
+      border-radius: 2px;
+    }
+    .skip-link:focus { left: var(--sp-16); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal-right, .reveal-scale, .reveal-zoom {
+        transition: none;
+        opacity: 1;
+        transform: none !important;
+      }
+      .book-btn::after, .nav-book::after { animation: none; }
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">דלג לתוכן</a>
+
+  <!-- ══ SOCIAL PROOF BAR ══ -->
+  <div class="proof-bar">
+    <span class="proof-bar-item">⭐ 4.9 Google</span>
+    <span class="proof-bar-sep" aria-hidden="true">|</span>
+    <span class="proof-bar-item">500+ ביקורות</span>
+    <span class="proof-bar-sep" aria-hidden="true">|</span>
+    <span class="proof-bar-item">פתוח 7 ימים בשבוע</span>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <nav class="nav" id="nav" aria-label="ניווט ראשי">
+    <a href="#" class="nav-logo" aria-label="מירה קפה — חזרה לראש">מירה</a>
+
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#menu"  onclick="closeMenu()">תפריט</a></li>
+      <li><a href="#about" onclick="closeMenu()">אודות</a></li>
+      <li><a href="#visit" onclick="closeMenu()">מצאו אותנו</a></li>
+      <li>
+        <a href="#book" class="book-btn nav-book desktop-only" onclick="closeMenu()">
+          <span>הזמן מקום</span>
+        </a>
+      </li>
+    </ul>
+
+    <button class="nav-toggle" id="nav-toggle"
+            aria-label="פתח ניווט" aria-expanded="false" aria-controls="nav-links">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <main id="main">
+
+  <!-- ══ SCROLL-EXPAND HERO ══ -->
+  <section class="seh" id="seh" aria-labelledby="seh-title">
+
+    <div class="seh-bg" id="seh-bg">
+      <img class="seh-bg-img"
+           src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=1920&fit=crop&q=85"
+           alt="" aria-hidden="true" fetchpriority="high">
+      <div class="seh-bg-dim" aria-hidden="true"></div>
+    </div>
+
+    <div class="seh-card" id="seh-card">
+      <img class="seh-card-img"
+           src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200&fit=crop&q=85"
+           alt="אווירת מירה קפה" fetchpriority="high">
+      <div class="seh-card-dim" id="seh-card-dim" aria-hidden="true"></div>
+    </div>
+
+    <h1 class="seh-title" id="seh-title">
+      <span class="seh-word" id="seh-word-l">מירה</span>
+      <span class="seh-word" id="seh-word-r">קפה</span>
+    </h1>
+
+    <p class="seh-hint" id="seh-hint" aria-hidden="true">גלול כדי להיכנס</p>
+
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ STATS ══ -->
+  <section class="stats" aria-label="נתוני מירה קפה">
+    <div class="stats-grid">
+
+      <div class="stat-item reveal">
+        <span class="stat-num">
+          <span class="count-up" data-target="6">0</span><span class="stat-sfx">+</span>
+        </span>
+        <span class="stat-label">שנות קפה מעולה</span>
+      </div>
+
+      <div class="stat-item reveal delay-1">
+        <span class="stat-num">
+          <span class="count-up" data-target="4.9" data-decimal="1" data-from="3.5">3.5</span>
+        </span>
+        <span class="stat-label">דירוג גוגל</span>
+      </div>
+
+      <div class="stat-item reveal delay-2">
+        <span class="stat-num">
+          <span class="count-up" data-target="300">0</span><span class="stat-sfx">+</span>
+        </span>
+        <span class="stat-label">כוסות קפה ביום</span>
+      </div>
+
+      <div class="stat-item reveal delay-3">
+        <span class="stat-num">
+          <span class="count-up" data-target="500">0</span><span class="stat-sfx">+</span>
+        </span>
+        <span class="stat-label">ביקורות מרוצים</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ ABOUT ══ -->
+  <section class="section about" id="about" aria-labelledby="about-heading">
+    <div class="about-grid">
+
+      <div class="about-body">
+        <h2 class="sr-only" id="about-heading">אודות מירה קפה</h2>
+        <span class="section-tag" aria-hidden="true">הסיפור שלנו</span>
+        <p class="about-pull reveal">
+          קפה צריך להרגיש כאילו הוא היה שם כבר לפני שהגעת.
+        </p>
+        <p class="about-text reveal delay-1">
+          מירה התחיל כיחידת פינה ודעה חזקה על קפה. פתחנו ב-2019 עם מכונת אספרסו קטנה, פטיפון יד שנייה, ואמונה שהשכונה מגיעה למקום שמכיר את שמך. שש שנים אחרי, לא הרבה השתנה. אנחנו מתכוונים לזה כמחמאה הגבוהה ביותר האפשרית.
+        </p>
+        <p class="about-text reveal delay-2">
+          אנחנו מקלים ממקלים שעובדים ישירות עם חוות. אופים כל יום. שומרים על המוזיקה בעוצמה שאפשר לדבר מעליה. בואו אלינו.
+        </p>
+      </div>
+
+      <div class="about-photo reveal delay-1"
+           role="img"
+           aria-label="פנים חמים של מירה קפה, אור אחר הצהריים">
+        <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&fit=crop&q=85"
+             alt="פנים מירה קפה, אור חם ואווירה שכונתית"
+             style="width:100%; height:100%; object-fit:cover; display:block;">
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ MENU ══ -->
+  <section class="section menu" id="menu" aria-labelledby="menu-heading">
+    <div class="menu-inner">
+
+      <div class="menu-header">
+        <div>
+          <span class="section-tag" style="margin-bottom:var(--sp-16);">מה אנחנו מכינים</span>
+          <h2 class="section-heading" id="menu-heading">בתפריט</h2>
+        </div>
+        <p class="menu-aside">מבחר. התפריט המלא בפנים.</p>
+      </div>
+
+      <ul class="menu-list" aria-label="הדגשי תפריט">
+
+        <li class="menu-item reveal-right">
+          <div class="menu-item-body">
+            <span class="menu-item-name">פלאט וייט</span>
+            <span class="menu-item-desc">אספרסו הבית שלנו, חלב שלם מוקצף, מוגש בכוס קרמיקה. ביקשו חלב שיבולת שועל? לא תשמעו מילה.</span>
+          </div>
+          <span class="menu-item-price" aria-label="שמונה עשר שקל">₪18</span>
+        </li>
+
+        <li class="menu-item reveal-right delay-1">
+          <div class="menu-item-body">
+            <span class="menu-item-name">לחמנייה בוקר</span>
+            <span class="menu-item-desc">קליפת תפוז, קינמון וקרדמום. נאפים מאפס כל בוקר. הכי טוב חמים, מיד.</span>
+          </div>
+          <span class="menu-item-price" aria-label="ארבעה עשר שקל">₪14</span>
+        </li>
+
+        <li class="menu-item reveal-right delay-2">
+          <div class="menu-item-body">
+            <span class="menu-item-name">לאטה עונתי</span>
+            <span class="menu-item-desc">משתנה עם העונה ומה שהשוק מביא. שאלו אותנו מה יש היום.</span>
+          </div>
+          <span class="menu-item-price" aria-label="עשרים שקל">₪20</span>
+        </li>
+
+        <li class="menu-item reveal-right">
+          <div class="menu-item-body">
+            <span class="menu-item-name">הרגיל</span>
+            <span class="menu-item-desc">צ'דר מיושן, ביצה ג'אמי וכפית דבש חריף על לחם שאור קלוי. הסנדוויץ' שהפך אותנו לרגולרים של בית הקפה שלנו.</span>
+          </div>
+          <span class="menu-item-price" aria-label="שלושים וחמישה שקל">₪35</span>
+        </li>
+
+        <li class="menu-item reveal-right delay-1">
+          <div class="menu-item-body">
+            <span class="menu-item-name">קפה מסנן</span>
+            <span class="menu-item-desc">מקור בודד, מתחלף שבועי. איטי, ושווה את זה. בקשו תוספת ונספר לכם מאיפה הוא בא.</span>
+          </div>
+          <span class="menu-item-price" aria-label="שנים עשר שקל">₪12</span>
+        </li>
+
+      </ul>
+
+      <p class="menu-footnote">הערות תזונתיות זמינות על פי בקשה. אנחנו מתאימים לרוב הדרישות.</p>
+
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ REVIEWS ══ -->
+  <section class="section reviews" id="reviews" aria-labelledby="reviews-heading">
+    <div class="reviews-glow" aria-hidden="true"></div>
+    <div class="reviews-inner">
+
+      <div class="reviews-header">
+        <span class="section-tag">מה אומרים עלינו</span>
+        <h2 class="section-heading" id="reviews-heading">הלקוחות מדברים</h2>
+      </div>
+
+      <div class="reviews-grid">
+
+        <article class="review-card reveal-scale">
+          <div class="review-stars" aria-label="5 כוכבים">★★★★★</div>
+          <blockquote class="review-quote">
+            "קפה הכי טוב בשכונה, מגיעה כל בוקר כבר שלוש שנים"
+          </blockquote>
+          <footer>
+            <span class="review-author">מיכל כהן</span>
+            <span class="review-location">פלורנטין</span>
+          </footer>
+        </article>
+
+        <article class="review-card reveal-scale delay-1">
+          <div class="review-stars" aria-label="5 כוכבים">★★★★★</div>
+          <blockquote class="review-quote">
+            "האווירה כאן היא משהו אחר לגמרי. מרגישים כמו בבית"
+          </blockquote>
+          <footer>
+            <span class="review-author">דני לוי</span>
+            <span class="review-location">נווה צדק</span>
+          </footer>
+        </article>
+
+        <article class="review-card reveal-scale delay-2">
+          <div class="review-stars" aria-label="5 כוכבים">★★★★★</div>
+          <blockquote class="review-quote">
+            "הקרואסון הכי טרי בתל אביב, ללא עוררין"
+          </blockquote>
+          <footer>
+            <span class="review-author">שירה אברהם</span>
+            <span class="review-location">לב העיר</span>
+          </footer>
+        </article>
+
+        <article class="review-card reveal-scale delay-1">
+          <div class="review-stars" aria-label="5 כוכבים">★★★★★</div>
+          <blockquote class="review-quote">
+            "כוס הקפה הזאת הצילה לי כמה בקרים קשים"
+          </blockquote>
+          <footer>
+            <span class="review-author">יוסי מזרחי</span>
+            <span class="review-location">יפו</span>
+          </footer>
+        </article>
+
+        <article class="review-card reveal-scale delay-2">
+          <div class="review-stars" aria-label="5 כוכבים">★★★★★</div>
+          <blockquote class="review-quote">
+            "שירות חם, קפה מעולה, מקום שאתה רוצה לחזור אליו"
+          </blockquote>
+          <footer>
+            <span class="review-author">נועה שפירא</span>
+            <span class="review-location">הצפון הישן</span>
+          </footer>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ GALLERY ══ -->
+  <section class="gallery" aria-label="אווירת בית הקפה">
+    <div class="gallery-strip" role="list" tabindex="0" aria-label="גלריית תמונות — גלול ימינה לעוד">
+      <div class="gallery-panel reveal-zoom" role="listitem">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&fit=crop&q=85"
+             alt="כוס אספרסו מוזגת" loading="lazy"
+             style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-panel reveal-zoom delay-1" role="listitem">
+        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=900&fit=crop&q=85"
+             alt="פנים חמים של בית הקפה, אור אחר הצהריים" loading="lazy"
+             style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-panel reveal-zoom delay-2" role="listitem">
+        <img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600&fit=crop&q=85"
+             alt="פולי קפה ועשבי תיבול טריים" loading="lazy"
+             style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-panel reveal-zoom delay-3" role="listitem">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=900&fit=crop&q=85"
+             alt="שולחן קפה נעים עם אור בוקר" loading="lazy"
+             style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- ══ LOCATION ══ -->
+  <section class="section location" id="visit" aria-labelledby="visit-heading">
+    <div class="location-grid">
+
+      <div class="location-info">
+        <div>
+          <span class="section-tag">מצאו אותנו</span>
+          <h2 class="section-heading reveal" id="visit-heading">בואו להגיד שלום.</h2>
+        </div>
+
+        <div class="reveal delay-1">
+          <span class="location-address-label">כתובת</span>
+          <address class="location-address">
+            רחוב רוטשילד 22<br>
+            תל אביב-יפו
+          </address>
+        </div>
+
+        <table class="hours-table reveal delay-2" aria-label="שעות פתיחה">
+          <tbody>
+            <tr><td>ראשון &ndash; חמישי</td><td>7:00 &ndash; 18:00</td></tr>
+            <tr><td>שישי</td><td>7:00 &ndash; 15:00</td></tr>
+            <tr><td>שבת</td><td>9:00 &ndash; 16:00</td></tr>
+          </tbody>
+        </table>
+
+        <a href="mailto:hello@miracafe.co.il" class="location-cta reveal delay-3">
+          שלחו לנו הודעה
+        </a>
+      </div>
+
+      <div class="location-map reveal delay-1" aria-label="מפה: מירה קפה ברחוב רוטשילד 22, תל אביב-יפו">
+        <iframe
+          src="https://maps.google.com/maps?q=Rothschild+Boulevard+22+Tel+Aviv&output=embed&hl=he"
+          width="100%" height="100%"
+          style="border:0;position:absolute;inset:0;width:100%;height:100%;"
+          allowfullscreen loading="lazy"
+          title="מיקום מירה קפה"></iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ PRE-FOOTER CTA ══ -->
+  <section class="cta-section" id="book" aria-labelledby="cta-heading">
+    <div class="cta-section-inner">
+      <span class="section-tag">הזמינו מקום</span>
+      <h2 class="cta-section-heading reveal" id="cta-heading">מגיעים? אנחנו שומרים לכם פינה.</h2>
+      <p class="cta-section-sub reveal delay-1">הזמינו מראש ונדאג שהכל יהיה מוכן בשבילכם.</p>
+      <div class="reveal delay-2">
+        <a href="tel:+972-3-000-0000" class="book-btn">
+          <span>הזמן מקום</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+
+      <span class="footer-logo">מירה</span>
+
+      <nav class="footer-social" aria-label="רשתות חברתיות">
+        <a href="#" aria-label="מירה קפה באינסטגרם">אינסטגרם</a>
+        <a href="#" aria-label="מירה קפה בפייסבוק">פייסבוק</a>
+      </nav>
+
+      <div class="footer-meta">
+        <p class="footer-address">
+          רחוב רוטשילד 22 &middot; תל אביב-יפו
+        </p>
+        <p class="footer-copy">&copy; 2025 מירה קפה</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ══ FLOATING MOBILE BUTTON ══ -->
+  <div class="float-book">
+    <a href="#book" class="book-btn" aria-label="הזמן מקום">
+      <span>הזמן מקום</span>
+    </a>
+  </div>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script>
+    /* NAV */
+    const nav    = document.getElementById('nav');
+    const toggle = document.getElementById('nav-toggle');
+    const links  = document.getElementById('nav-links');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+      toggle.setAttribute('aria-label', open ? 'סגור ניווט' : 'פתח ניווט');
+    });
+
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'פתח ניווט');
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && links.classList.contains('open')) closeMenu();
+    });
+
+    /* SCROLL-EXPAND HERO */
+    (function () {
+      var seh        = document.getElementById('seh');
+      var sehBg      = document.getElementById('seh-bg');
+      var sehCard    = document.getElementById('seh-card');
+      var sehDim     = document.getElementById('seh-card-dim');
+      var sehWordL   = document.getElementById('seh-word-l');
+      var sehWordR   = document.getElementById('seh-word-r');
+      var sehHint    = document.getElementById('seh-hint');
+      if (!seh || !sehBg || !sehCard) return;
+
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) return;
+
+      var progress     = 0;
+      var expanded     = false;
+      var touchStartY  = 0;
+      var raf          = null;
+
+      function mobile() { return window.innerWidth <= 768; }
+
+      function applyProgress(p) {
+        var m   = mobile();
+        var vw  = window.innerWidth;
+        var vh  = window.innerHeight;
+        var w   = 300 + p * (vw - 300);
+        var h   = 400 + p * (vh - 400);
+        var tx  = p * (m ? 120 : 150);
+        var sha = (1 - p) * 0.40;
+
+        sehBg.style.opacity          = 1 - p;
+        sehCard.style.width          = w + 'px';
+        sehCard.style.height         = h + 'px';
+        sehCard.style.borderRadius   = (16 * (1 - p)) + 'px';
+        sehCard.style.boxShadow      = p > 0.97 ? 'none' : '0 0 60px oklch(0% 0 0 / ' + sha + ')';
+        sehDim.style.opacity         = 0.7 - p * 0.7;
+        sehWordL.style.transform     = 'translateX(-' + tx + 'vw)';
+        sehWordR.style.transform     = 'translateX('  + tx + 'vw)';
+        sehHint.style.opacity        = Math.max(0, 1 - p * 5);
+      }
+
+      function setProgress(newP) {
+        progress = Math.max(0, Math.min(1, newP));
+        applyProgress(progress);
+
+        if (progress >= 1 && !expanded) {
+          expanded = true;
+          document.body.style.overflow = '';
+        } else if (progress < 1 && expanded) {
+          expanded = false;
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function onWheel(e) {
+        if (expanded) {
+          if (e.deltaY < 0 && window.scrollY <= 5) {
+            expanded = false;
+            document.body.style.overflow = 'hidden';
+            e.preventDefault();
+          }
+        } else {
+          e.preventDefault();
+          if (!raf) raf = requestAnimationFrame(function () {
+            raf = null;
+          });
+          setProgress(progress + e.deltaY * 0.0009);
+        }
+      }
+
+      function onTouchStart(e) {
+        touchStartY = e.touches[0].clientY;
+      }
+
+      function onTouchMove(e) {
+        if (!touchStartY) return;
+        var deltaY = touchStartY - e.touches[0].clientY;
+
+        if (expanded) {
+          if (deltaY < -20 && window.scrollY <= 5) {
+            expanded = false;
+            document.body.style.overflow = 'hidden';
+            e.preventDefault();
+            touchStartY = e.touches[0].clientY;
+          }
+        } else {
+          e.preventDefault();
+          var factor = deltaY < 0 ? 0.008 : 0.005;
+          setProgress(progress + deltaY * factor);
+          touchStartY = e.touches[0].clientY;
+        }
+      }
+
+      document.body.style.overflow = 'hidden';
+      applyProgress(0);
+
+      window.addEventListener('wheel',      onWheel,      { passive: false });
+      window.addEventListener('touchstart', onTouchStart, { passive: false });
+      window.addEventListener('touchmove',  onTouchMove,  { passive: false });
+    }());
+
+    /* SCROLL REVEAL */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-right, .reveal-scale, .reveal-zoom');
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        revealObs.unobserve(e.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    /* COUNT-UP */
+    const countEls = document.querySelectorAll('.count-up');
+    const countObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el     = e.target;
+        const target  = parseFloat(el.dataset.target);
+        const from    = parseFloat(el.dataset.from || '0');
+        const decimal = parseInt(el.dataset.decimal || '0', 10);
+        const dur     = 1300;
+        const t0      = performance.now();
+
+        (function step(now) {
+          const p = Math.min((now - t0) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = from + (target - from) * eased;
+          el.textContent = decimal ? val.toFixed(decimal) : Math.round(val);
+          if (p < 1) requestAnimationFrame(step);
+        })(performance.now());
+
+        countObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    countEls.forEach(el => countObs.observe(el));
+
+    /* GALLERY DRAG */
+    const strip = document.querySelector('.gallery-strip');
+    if (strip) {
+      let isDown = false, startX, scrollLeft;
+      strip.addEventListener('mousedown',  e => { isDown = true; startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
+      strip.addEventListener('mouseleave', () => isDown = false);
+      strip.addEventListener('mouseup',    () => isDown = false);
+      strip.addEventListener('mousemove',  e => {
+        if (!isDown) return;
+        e.preventDefault();
+        strip.scrollLeft = scrollLeft - (e.pageX - strip.offsetLeft - startX);
+      });
+    }
+  </script>
+
+</body>
+</html>
